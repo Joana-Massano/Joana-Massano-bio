@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>go.with.joo · viagens & profissão</title>
+<meta name="description" content="Desenho viagens que se sentem antes de acontecer. Consultora de viagens baseada no Algarve.">
+<link rel="icon" type="image/png" href="assets/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Inter:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --aqua:#86D1C4;
+    --orange:#F28C48;
+    --areia:#F7EFE5;
+    --verde:#1A3530;
+    --verde-soft:#2a4a43;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--areia);
+    color:var(--verde);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    position:relative;
+  }
+
+  /* language toggle */
+  .lang{
+    position:absolute;
+    top:18px;right:18px;
+    z-index:20;
+    display:flex;
+    gap:2px;
+    background:rgba(26,53,48,.55);
+    backdrop-filter:blur(8px);
+    border-radius:999px;
+    padding:3px;
+  }
+  .lang button{
+    font-family:'Geist Mono',monospace;
+    font-size:11px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--areia);
+    background:none;border:none;
+    padding:6px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+  .lang button.active{
+    background:var(--orange);
+    color:var(--verde);
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    height:78vh;
+    min-height:520px;
+    max-height:760px;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+  }
+  .hero img{
+    position:absolute;
+    inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:center 22%;
+  }
+  .hero .overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to bottom,
+      rgba(26,53,48,.10) 0%,
+      rgba(26,53,48,.05) 38%,
+      rgba(26,53,48,.55) 78%,
+      rgba(26,53,48,.82) 100%);
+  }
+  .sigil{
+    position:absolute;
+    top:22px;left:22px;
+    width:54px;height:54px;
+    border-radius:50%;
+    background:var(--orange);
+    z-index:5;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:800;
+    color:var(--verde);
+    font-size:24px;
+    letter-spacing:-.04em;
+  }
+  .hero-content{
+    position:relative;
+    z-index:6;
+    padding:0 28px 38px;
+    color:var(--areia);
+  }
+  .eyebrow{
+    font-family:'Geist Mono',monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--aqua);
+    display:inline-block;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:800;
+    font-size:32px;
+    line-height:1.08;
+    letter-spacing:-.04em;
+    text-transform:lowercase;
+    margin-bottom:16px;
+  }
+  .hero h1 .pop{
+    color:var(--orange);
+    font-style:italic;
+  }
+  .hero p.intro{
+    font-size:14.5px;
+    line-height:1.5;
+    max-width:38ch;
+    color:rgba(247,239,229,.92);
+  }
+
+  /* BODY SECTIONS */
+  .body{padding:34px 28px 28px}
+
+  .door{
+    margin-bottom:14px;
+  }
+  /* primary door — travel */
+  .door-travel{
+    background:var(--verde);
+    border-radius:20px;
+    padding:26px 24px;
+    color:var(--areia);
+  }
+  .door-travel .label{
+    font-family:'Geist Mono',monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--aqua);
+    display:block;
+    margin-bottom:10px;
+  }
+  .door-travel p{
+    font-size:15px;
+    line-height:1.5;
+    margin-bottom:20px;
+    color:rgba(247,239,229,.92);
+  }
+  .btn{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:700;
+    letter-spacing:-.02em;
+    text-transform:lowercase;
+    border-radius:999px;
+    padding:15px 20px;
+    transition:transform .18s ease, filter .18s ease;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn-primary{
+    background:var(--orange);
+    color:var(--verde);
+    font-size:17px;
+  }
+  .btn-primary:hover{filter:brightness(1.05)}
+
+  /* secondary door — profession (calmer, lighter weight) */
+  .door-prof{
+    padding:26px 6px 6px;
+  }
+  .door-prof .label{
+    font-family:'Geist Mono',monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--orange);
+    display:block;
+    margin-bottom:12px;
+  }
+  .door-prof p{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--verde);
+    margin-bottom:14px;
+  }
+  .door-prof p.muted{
+    color:var(--verde-soft);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--verde);
+    border:1.5px solid var(--verde);
+    font-size:15px;
+    margin-top:6px;
+  }
+  .btn-ghost:hover{background:var(--verde);color:var(--areia)}
+
+  .divider{
+    height:1px;
+    background:rgba(26,53,48,.12);
+    margin:30px 0 26px;
+  }
+
+  /* channels */
+  .channels{
+    display:flex;
+    gap:10px;
+    margin-bottom:30px;
+  }
+  .channels a{
+    flex:1;
+    text-align:center;
+    text-decoration:none;
+    font-family:'Geist Mono',monospace;
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--verde);
+    background:var(--aqua);
+    border-radius:12px;
+    padding:14px 8px;
+    transition:filter .18s ease, transform .18s ease;
+  }
+  .channels a:hover{filter:brightness(1.04)}
+  .channels a:active{transform:scale(.97)}
+
+  /* footer */
+  footer{
+    text-align:center;
+    padding:0 28px 40px;
+  }
+  footer .logo{
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:-.03em;
+    text-transform:lowercase;
+  }
+  footer .logo .pop{color:var(--orange);font-style:italic}
+  footer .rnavt{
+    font-family:'Geist Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--verde-soft);
+    margin-top:8px;
+  }
+
+  /* focus visibility for a11y */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--orange);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;scroll-behavior:auto!important}
+  }
+
+  @media(min-width:481px){
+    .hero h1{font-size:36px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="lang" role="group" aria-label="Idioma / Language">
+    <button id="bt-pt" class="active" onclick="setLang('pt')">PT</button>
+    <button id="bt-en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <img src="assets/hero_joana.jpg" alt="Joana Massano">
+    <div class="overlay"></div>
+    <div class="sigil" aria-hidden="true">j</div>
+    <div class="hero-content">
+      <span class="eyebrow" data-pt="GO.WITH.JOO" data-en="GO.WITH.JOO">GO.WITH.JOO</span>
+      <h1 data-pt='desenho viagens que se sentem <span class="pop">antes</span> de acontecer'
+          data-en='i design trips you feel <span class="pop">before</span> they happen'></h1>
+      <p class="intro"
+         data-pt="Baseada no Algarve, já viajei pela Europa, Ásia, América e África — e vivi seis meses entre a Indonésia e a Tailândia. Não venho de uma família de viajantes. Mas no dia em que percebi tudo o que uma simples viagem nos dá, não houve volta a dar."
+         data-en="Based in the Algarve, I've travelled across Europe, Asia, the Americas and Africa — and lived six months between Indonesia and Thailand. I don't come from a family of travellers. But the day I understood everything a single trip can give us, there was no turning back."></p>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <main class="body">
+
+    <!-- DOOR 1 · TRAVEL (primary) -->
+    <section class="door">
+      <div class="door-travel">
+        <span class="label" data-pt="PLANEAR A TUA VIAGEM" data-en="PLAN YOUR TRIP">PLANEAR A TUA VIAGEM</span>
+        <p data-pt="As que não cabem numa pesquisa do Google — circuitos, multidestino, Ásia, América Latina, Europa. Planeio cada detalhe com o olhar de quem já lá esteve. Orçamento gratuito, para quem quer viajar com critério."
+           data-en="The ones that don't fit a Google search — multi-stop journeys, the Americas, Asia, Europe. I plan every detail with the eye of someone who's been there. Free quote, for those who want to travel with intent."></p>
+        <a class="btn btn-primary" href="https://mango-profit-f43.notion.site/32972206687b80e198deed23e5ed02c1" target="_blank" rel="noopener"
+           data-pt="pedir o meu orçamento" data-en="request my quote">pedir o meu orçamento</a>
+      </div>
+    </section>
+
+    <!-- DOOR 2 · PROFESSION (calm invitation) -->
+    <section class="door door-prof">
+      <span class="label" data-pt="A PROFISSÃO" data-en="THE PROFESSION">A PROFISSÃO</span>
+      <p data-pt="Há outra coisa que faço: ensino esta profissão a quem quer construir um negócio a sério no turismo — com método, não no escuro. Mostro-te o caminho todo, passo a passo (andá-lo é contigo), com acompanhamento próximo, formação contínua e as ferramentas que tornam o trabalho descomplicado."
+         data-en="There's something else I do: I teach this profession to those who want to build a real business in travel — with method, not in the dark. I show you the whole path, step by step (walking it is on you), with close mentoring, ongoing training and the tools that make the work simple."></p>
+      <p class="muted" data-pt="Não é para toda a gente, e não te prometo nada — é trabalho, é real, e há lugar para mais gente. Se já te passou pela cabeça, vê como funciona por dentro."
+         data-en="It's not for everyone, and I promise you nothing — it's work, it's real, and there's room for more people. If it's ever crossed your mind, see how it works from the inside."></p>
+      <a class="btn btn-ghost" href="https://mango-profit-f43.notion.site/38072206687b802d8f41c56e3749b5b3" target="_blank" rel="noopener"
+         data-pt="ver como funciona" data-en="see how it works">ver como funciona</a>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CHANNELS -->
+    <nav class="channels" aria-label="Redes">
+      <a href="https://www.instagram.com/go.with.joo/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@gowithjoo.travel" target="_blank" rel="noopener">TikTok</a>
+    </nav>
+
+  </main>
+
+  <footer>
+    <div class="logo">@go.with.<span class="pop">joo</span></div>
+    <div class="rnavt">RNAVT 3301</div>
+  </footer>
+
+</div>
+
+<script>
+  function setLang(lang){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-'+lang+']').forEach(function(el){
+      el.innerHTML = el.getAttribute('data-'+lang);
+    });
+    document.getElementById('bt-pt').classList.toggle('active', lang==='pt');
+    document.getElementById('bt-en').classList.toggle('active', lang==='en');
+    try{ localStorage.setItem('joo_lang', lang); }catch(e){}
+  }
+  // init
+  (function(){
+    var saved='pt';
+    try{ saved = localStorage.getItem('joo_lang') || 'pt'; }catch(e){}
+    if(!['pt','en'].includes(saved)) saved='pt';
+    setLang(saved);
+  })();
+</script>
+</body>
+</html>
